@@ -1,4 +1,4 @@
-var menu = {
+let menu = {
 	"Pizzor klass 1": [
 		{"name": "Margherita", "contents": ["Tomatsås", "Ost"], "price": 65 },
 		{"name": "Vesuvio", "contents": ["Tomatsås", "Ost", "Skinka"], "price": 65 },
@@ -49,33 +49,50 @@ var menu = {
 	]
 }
 
-var n = 0;
+let buttonAdd = [];
+let buttonSub = [];
+
+let n = 0;
 $(document).ready(function(e) {
     $("#text").html("");
-      for(var section in menu) {
-        $("#text").append("<h2>"+section+"</h2>");
-          for(var itemindex in menu[section]) {
-            var item = menu[section][itemindex]; 
-              $("#text").append("<strong> "+ item["name"] + " " + item["price"] + ":-" + "</strong>");
-           
-             n++;    
-             $("#text").append("<br />");     
-             
-             for(var cindex in item["contents"]) {
-                $("#text").append(item["contents"][cindex] + " ");
-            }
+      for(let section in menu) {
+        $("#text").append("<br />");
+		$("#text").append("<hr />");   
+        $("#text").append("<h1>"+section+"</h1>");
+          for(let itemindex in menu[section]) {
+            let item = menu[section][itemindex]; 
+            buttonAdd[itemindex]  = document.createElement("button");
+            buttonAdd[itemindex].innerHTML = " + ";
+            buttonSub[itemindex]  = document.createElement("button");
+            buttonSub[itemindex].innerHTML = " - ";
+            buttonSub[itemindex].style = 'margin-right: 60px;float: right; width: 50px; height: 50px; border-radius: 50px; border-color: rgb(96,96,96); border: solid; box-shadow: 2px 2px 2px rgba(0,0,0,0.2); background-color: white; color: red; font-size:25px;';
+            buttonAdd[itemindex].style = 'margin-right: 40px;float: right; width: 50px; height: 50px; border-radius: 50px; border-color: rgb(96,96,96); border: solid; box-shadow: 2px 2px 2px rgba(0,0,0,0.2); background-color: white; color: green; font-size: 25px;';
+      
+            $("#text").append("<strong> "+ item["name"] + " " + item["price"] + ":-" + "</strong>");  
+            $("#text").append(buttonSub[itemindex]);
+            $("#text").find(buttonSub[itemindex]).on("click", function(){
+              console.log(item["name"]);
+              console.log(item["price"]);
+            });
+            $("#text").append(buttonAdd[itemindex]);
+            $("#text").find(buttonAdd[itemindex]).on("click", function(){
+              console.log(item["name"]);
+              console.log(item["price"]);
+            });
+			$("#text").append("<br />");   
+            $("#text").append("<br />");     
+             for(let cindex in item["contents"]) {
+				$("#text").append(item["contents"][cindex] + " ");	 
+              }
             $("#text").append("<hr />");
-            $("#text").append("<br />");   
+            $("#text").append("<br />"); 
+            //$("#text").append("<br />");   
         }
     }
 });
 
-const button = document.createElement('button')
+function Stingcheck(){
+	let text = text.includes("a:")
+	t
 
-button.innerText = 'can you click menu?'
-
-button.addEventListener('click', () => {
-    alert('Hej')
-})
-
-document.body.appendChild(button)
+}
