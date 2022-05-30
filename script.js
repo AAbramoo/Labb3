@@ -7,12 +7,12 @@ let menu = {
 	"Pizzor klass 2": [
 		{"name": "Calzone", "contents": ["Tomatsås", "Ost", "Skinka"], "price": 80 },
 		{"name": "Capricciosa", "contents": ["Tomatsås", "Ost", "Skinka", "Champinjoner" ], "price": 70 },
-		{"name": "Tomaso", "contents": ["Tomatsås", "Ost", "Skinka", "Räkor" ], "price": 70 },
+		{"name": "Tomaso", "contents": ["Tomatsås", "Ost", "Skinka", "a:Räkor" ], "price": 70 },
 		{"name": "Hawaii", "contents": ["Tomatsås", "Ost", "Skinka", "Ananas" ], "price": 70 },
 		{"name": "Oriental", "contents": ["Tomatsås", "Ost", "Skinka", "Köttfärs" ], "price": 70 },
 		{"name": "Venezia", "contents": ["Tomatsås", "Ost", "Skinka", "Tonfisk" ], "price": 70 },
 		{"name": "Bolognese", "contents": ["Tomatsås", "Ost", "Köttfärs", "Lök" ], "price": 70 },
-		{"name": "Napoli", "contents": ["Tomatsås", "Ost", "Räkor", "Champinjoner" ], "price": 70 }
+		{"name": "Napoli", "contents": ["Tomatsås", "Ost", "a:Räkor", "Champinjoner" ], "price": 70 }
 	],
 	"Pizzor klass 3": [
 		{"name": "Bravo", "contents": ["Tomatsås", "Ost", "Skinka", "Bacon", "Lök", "a:Ägg" ], "price": 75 },
@@ -52,7 +52,7 @@ let menu = {
 let buttonAdd = [];
 let buttonSub = [];
 let check = [];
-let checkPrice = [];
+let checkPrice =[];
 
 let n = 0;
 $(document).ready(function(e) {
@@ -64,78 +64,62 @@ $(document).ready(function(e) {
           for(let itemindex in menu[section]) {
             let item = menu[section][itemindex]; 
             buttonAdd[itemindex]  = document.createElement("button");
-			buttonAdd[itemindex].innerHTML = " + ";
-			buttonSub[itemindex]  = document.createElement("button");
+            buttonAdd[itemindex].innerHTML = " + ";
+            buttonSub[itemindex]  = document.createElement("button");
             buttonSub[itemindex].innerHTML = " - ";
-            buttonSub[itemindex].style = 'margin-right: 60px;float: right; width: 50px; height: 50px; border-radius: 50px; border-color: rgb(96,96,96); border: solid; box-shadow: 2px 2px 2px rgba(0,0,0,0.2); background-color: white; color: red; font-size:25px;';
-            buttonAdd[itemindex].style = 'margin-right: 40px;float: right; width: 50px; height: 50px; border-radius: 50px; border-color: rgb(96,96,96); border: solid; box-shadow: 2px 2px 2px rgba(0,0,0,0.2); background-color: white; color: green; font-size: 25px;';
+            buttonSub[itemindex].style = 'margin-right: 60px;float: right; width: 100px; height: 100px; border-radius: 50px; border-color: rgb(96,96,96); border: solid; box-shadow: 2px 2px 2px rgba(0,0,0,0.2); background-color: white; color: red; font-size:25px;';
+            buttonAdd[itemindex].style = 'margin-right: 40px;float: right; width: 100px; height: 100px; border-radius: 50px; border-color: rgb(96,96,96); border: solid; box-shadow: 2px 2px 2px rgba(0,0,0,0.2); background-color: white; color: green; font-size: 25px;';
       
             $("#text").append("<strong> "+ item["name"] + " " + item["price"] + ":-" + "</strong>");  
-        
-			$("#text").append(buttonSub[itemindex]);
-			$("#text").find(buttonSub[itemindex]).on("click", function(){
-				for(let i=0; i<check.length; i++){
-					if (check[i] == item["name"]) { 
-					  check.splice(i, 1); 
-					  checkPrice.splice(i, 1);
-					break;
-					}
-				  }
-				  console.log(check);
-				  console.log(checkPrice);
-				  updateList();
-            });
             
-			$("#text").append(buttonAdd[itemindex]);
-			$("#text").find(buttonAdd[itemindex]).on("click", function(){
-				check.push(item["name"]);
-				checkPrice.push(item["price"]);
-				console.log(check);
-				console.log(checkPrice);
-				$("#list").html("");
-  				for(var i = 0; i < check.length; i++){
-					console.log("dsa")
-        			$("#list").append("<li class='list-group-item list-group-item-primary" + check[i] + "</li>")
-    			}
-            });
+            $("#text").append(buttonSub[itemindex]);
+            $("#text").find(buttonSub[itemindex]).on("click", function(){
+                for(let i=0; i<check.length; i++){
+                  if (check[i] == item["name"]) { 
+                    $("#mat").empty();
+                    check.splice(i, 1); 
+                    checkPrice.splice(i, 1);
+                    for(var n=0; n<check.length; n++){
+                      $("#mat").append(check[n] + "</br>"); 
+                    }   
+                    break;
+                  }
+                  
+
+                }
+                console.log(check);
+                console.log(checkPrice);
+  
+              });
+              $("#text").append(buttonAdd[itemindex]);
+              $("#text").find(buttonAdd[itemindex]).on("click", function(){
+                check.push(item["name"]);
+                checkPrice.push(item["price"]);
+                console.log(check);
+                console.log(checkPrice);
+                $("#mat").empty();
+                for(var i=0; i<check.length; i++){
+                  $("#mat").append(check[i] + "</br>"); 
+                }            
+              });
 			$("#text").append("<br />");   
             $("#text").append("<br />");     
              for(let cindex in item["contents"]) {
-				$("#text").append(item["contents"][cindex] + " ");	 
+                if(item["contents"].textContent == "a:" ) {
+                $("#text").append("<strong> " +item["contents"] [cindex] + " ");
+                console.log(item["contents"]);	
+                }
               }
             $("#text").append("<hr />");
             $("#text").append("<br />"); 
             //$("#text").append("<br />");   
-			}
         }
     }
-);
+});
 
-function addText(){
-	array.forEach(function(elem){
-		$('#uniqueId').append('<div><label class="bo bp"><input type="checkbox" name="addees[' + elem + ']" value="' + elem + '">Test' + elem + '</label></div>')
-	}, this);
+function Stingcheck(){
+	let text = text.includes("a:")
+	t
+
 }
 
-function addButton(){
-	buttonAdd[itemindex]  = document.createElement("button");
-	buttonAdd[itemindex].innerHTML = " + ";
-}
-function updateList(){
-    $("#list").html("");
-    for(var i = 0; i < check.length; i++){
-        $("#list").append("<li class='list-group-item list-group-item-primary" + check[i] + "</li>")
-    }
-    $("li.list-group-item").click(function(e){
-        var index = -1;
-        for(var i = 0; i < check.length; i++){
-            if(check[i] == $(e.target).text()){
-                index = i;
-            }
-        }
-        if(index != -1){
-            check.splice(index, i);
-            $(e.target).remove();
-        }
-    });
-}
